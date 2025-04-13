@@ -5,7 +5,7 @@ import time
 
 DB_CONFIG = {
     "host": "localhost",
-    "user": "root",%
+    "user": "root",
     "password": "nosedice",
     "database": "umg_biometria"
 }

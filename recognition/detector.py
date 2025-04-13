@@ -6,9 +6,9 @@ import os
 from database.db import get_connection, log_event
 from PIL import Image
 import io
+import pickle
 
 # Cargar datos previamente entrenados
-import pickle
 with open("modelo/known_encodings.pkl", "rb") as f:
     known_data = pickle.load(f)
 
@@ -42,6 +42,49 @@ def recognize_face(image_bytes):
             # Registrar evento en base de datos
             log_event(empleado_id, filename)
 
+            print(f"[ACCESO PERMITIDO] Empleado: {empleado_nombre} (ID: {empleado_id})")
+            print(f"[EVENTO] Imagen guardada: {filename}")
+            print("🚪 PUERTA ABIERTA\n")
+
             return {"access": True, "empleado": empleado_nombre}
 
+    print("[ACCESO DENEGADO] Rostro no reconocido.\n")
     return {"access": False}
+
+# 🔽 Bloque de ejecución directa desde terminal
+if __name__ == "__main__":
+    print("[INFO] Iniciando cámara para reconocimiento facial...")
+    print("[INFO] Presiona 'q' para salir.\n")
+    cap = cv2.VideoCapture(0)
+
+    if not cap.isOpened():
+        print("[ERROR] No se pudo abrir la cámara.")
+        exit()
+
+    while True:
+        ret, frame = cap.read()
+        if not ret:
+            break
+
+        _, buffer = cv2.imencode('.jpg', frame)
+        image_bytes = buffer.tobytes()
+
+        result = recognize_face(image_bytes)
+
+        if result["access"]:
+            label = f"{result['empleado']} - PUERTA ABIERTA"
+            color = (0, 255, 0)
+        else:
+            label = "Desconocido - ACCESO DENEGADO"
+            color = (0, 0, 255)
+
+        cv2.putText(frame, label, (10, 30),
+                    cv2.FONT_HERSHEY_SIMPLEX, 0.8, color, 2)
+        cv2.imshow("Reconocimiento Facial", frame)
+
+        if cv2.waitKey(1) & 0xFF == ord("q"):
+            print("[CIERRE] Reconocimiento detenido por el usuario.")
+            break
+
+    cap.release()
+    cv2.destroyAllWindows()
