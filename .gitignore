@@ -3,14 +3,24 @@ __pycache__/
 *.pyc
 *.pkl
 
-# Archivos pesados
-dataset/
-events/
-modelo/
+# Archivos pesados en subcarpetas (imágenes, modelos)
+events/*
+!events/.gitkeep
+
+dataset/*
+!dataset/.gitkeep
+
+modelo/*
+!modelo/.gitkeep
+
+recognition/*
+!recognition/.gitkeep
+
+# Ignora imágenes globales
 *.jpg
 *.png
 
-# Virtualenv
+# Entornos virtuales
 .venv/
 env/
 
