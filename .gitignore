@@ -1,0 +1,18 @@
+# Python
+__pycache__/
+*.pyc
+*.pkl
+
+# Archivos pesados
+dataset/
+events/
+modelo/
+*.jpg
+*.png
+
+# Virtualenv
+.venv/
+env/
+
+# Archivos del sistema
+.DS_Store
