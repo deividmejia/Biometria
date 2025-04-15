@@ -16,15 +16,13 @@ export function Formulario({ setUser }) {
     }
 
     setError(false);
-
-
     setUser({ nombre });
     console.log("Inicio de sesión exitoso:", nombre);
   };
 
   return (
-    <section>
-      <h1>Login</h1>
+    <section className="login-container">
+      <h1>User login</h1>
 
       <form className="formulario" onSubmit={manejarEnvio}>
         {error && <p className="error">Todos los campos son obligatorios</p>}
@@ -46,5 +44,9 @@ export function Formulario({ setUser }) {
     </section>
   );
 }
+
+
+
+
 
 

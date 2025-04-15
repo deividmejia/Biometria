@@ -1,3 +1,4 @@
+// App.jsx
 import { Formulario } from './components/Formulario';
 import { Home } from './components/Home';
 import { useState, useEffect } from 'react';
@@ -29,6 +30,7 @@ function App() {
 }
 
 export default App;
+
 
 
 
